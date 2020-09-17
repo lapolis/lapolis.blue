@@ -95,7 +95,7 @@ disableHugoGeneratorInject = false
   # Custom footer 
   # If you want, you can easily override the default footer with your own content. 
   #
-  # footerLeft = "Powered by <a href=\"http://gohugo.io\">Hugo</a>"
+  # footerLeft = "Powered by <a href=\"https://gohugo.io\">Hugo</a>"
   # footerRight = "Made with &#10084; by <a href=\"https://github.com/rhazdon\">Djordje Atlialp</a>"
 
   # Colors for favicons
@@ -106,7 +106,7 @@ disableHugoGeneratorInject = false
     theme = "#252627"
 
   [params.logo]
-    logoText     = "$ cd /home/lapolis/"
+    logoText     = "$ cd ~/"
     logoHomeLink = "/"
     # Set true to remove the logo cursor entirely.
     # logoCursorDisabled = false
