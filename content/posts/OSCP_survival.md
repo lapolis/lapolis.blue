@@ -28,7 +28,7 @@ I thought I would never say what I am going to say: `drink a lot of water`. Your
   
 Do not be nervous `(I wasn't, I swear! :P)`, especially the day before the exam. Just rest, do not do anything related to the OSCP, do something relaxing `(I swore the whole day against a f\*!$@&g Pi)`.  
   
-Once you survive the first 24 hours and you got at least 70 points, it is report time. You can either use the [whoisflynn](https://github.com/whoisflynn/OSCP-Exam-Report-Template) template with a little personalization or the magnificent [Offensive Security Exam Report Template in Markdown](https://github.com/noraj/OSCP-Exam-Report-Template-Markdown) by noraj.
+Once you survive the first 24 hours and you got at least 70 points, it is report time. You can either use the [whoisflynn](https://github.com/whoisflynn/OSCP-Exam-Report-Template) template with a little personalization or the magnificent [Offensive Security Exam Report Template in Markdown](https://github.com/noraj/OSCP-Exam-Report-Template-Markdown) by noraj. 
 ___  
 ## The Glory
 As soon as you get the confirmation of correctly submitting the report, open a beer, get a shower, open a beer, open a beer, open a beer and go to sleep. You deserve it.  
