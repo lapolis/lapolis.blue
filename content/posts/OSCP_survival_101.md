@@ -33,6 +33,10 @@ I thought I would never say what I am going to say: `drink a lot of water`. Your
   
 Do not be nervous `(I wasn't, I swear! :P)`, especially the day before the exam. Just rest, do not do anything related to the OSCP, do something relaxing `(I swore the whole day against a f*!$@&g Pi)`.  
   
+About your notes, use something that automatically backups `(possibly encrypted)` everything you do each few minutes. I personally use [Joplin](https://joplinapp.org/) because it is multi platform and do not need to keep doing all of the backups manually. It also play nice with the MD formatting and code highlighting. It was a bit sad to say goodbye to [CherryTree](https://www.giuspen.com/cherrytree/); however, I still suggest to use it if you need something simple that just runs everywhere.  
+  
+**Screenshots**: just do as many as you can. Since it is not possible to record the screen any more, just make sure you have enough screenshots for the report. One more thing, never close a terminal, you might need it later. Create 5 Desktops and use [tmux](https://github.com/tmux/tmux/wiki).  
+  
 Once you survive the first 24 hours and you got at least 70 points, it is report time. You can either use the [whoisflynn](https://github.com/whoisflynn/OSCP-Exam-Report-Template) template with a little personalization or the magnificent [Offensive Security Exam Report Template in Markdown](https://github.com/noraj/OSCP-Exam-Report-Template-Markdown) by noraj. 
 ___  
 ## The Glory
