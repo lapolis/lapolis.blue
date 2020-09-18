@@ -59,7 +59,7 @@ disableHugoGeneratorInject = false
   keywords = "hompage, blog, hacking, oscp, cracking, guide"
   images = [""]
 
-  homeSubtitle = "Just another noob trying to figure out things"
+  homeSubtitle = "Just another noob trying to figure things out"
 
   # Prefix of link to the git commit detail page. GitInfo must be enabled.
   #
