@@ -33,7 +33,7 @@ I thought I would never say what I am going to say: `drink a lot of water`. Your
   
 Do not be nervous `(I wasn't, I swear! :P)`, especially the day before the exam. Just rest, do not do anything related to the OSCP, do something relaxing `(I swore the whole day against a f*!$@&g Pi)`.  
   
-About your notes, use something that automatically backups `(possibly encrypted)` everything you do each few minutes. I personally use [Joplin](https://joplinapp.org/) because it is multi platform and do not need to keep doing all of the backups manually. It also play nice with the MD formatting and code highlighting. It was a bit sad to say goodbye to [CherryTree](https://www.giuspen.com/cherrytree/); however, I still suggest to use it if you need something simple that just runs everywhere.  
+About your notes, use something that automatically backups `(possibly encrypted)` everything you do every few minutes. I personally use [Joplin](https://joplinapp.org/) because it is multi platform and I do not need to keep doing all of the backups manually. It also plays nice with the MD formatting and code highlighting. I was a bit sad to say goodbye to [CherryTree](https://www.giuspen.com/cherrytree/); however, I still suggest to use it if you need something simple that just runs everywhere.  
   
 **Screenshots**: just do as many as you can. Since it is not possible to record the screen any more, just make sure you have enough screenshots for the report. One more thing, never close a terminal, you might need it later. Create 5 Desktops and use [tmux](https://github.com/tmux/tmux/wiki).  
   
