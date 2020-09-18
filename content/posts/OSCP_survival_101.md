@@ -1,8 +1,13 @@
 ---
-title: "OSCP Survival Techniques 101"
-date: 2020-09-15T14:34:16+01:00
+title: "OSCP_survival_101"
+date: 2020-09-18T08:59:52+01:00
 draft: true
+toc: false
+images:
+tags:
+  - OSCP
 ---
+
 With this short post I want to put together a few very good tips I found on the internet about how to prepare for and how to survive the OSCP exam.
 This is **not** a tool-kit since you will just need a basic Kali installation for your OSCP exam.  
 
