@@ -1,7 +1,7 @@
 ---
 title: "GPU_rig_setup_n_maintenance"
 date: 2020-09-25T08:38:16+01:00
-draft: true
+draft: false
 toc: false
 images:
 tags:
@@ -14,7 +14,7 @@ Few days ago, a poor GPU rig aka Ring0 (long story, don't ask), was full of stic
   
 Once Ring0 was nice and clean wearing its new jumper (more details later) I realised that I did not upgraded it for a while and many new versions of Ubuntu Server have been released (was running on [Ubuntu Server 16.04](https://releases.ubuntu.com/16.04/). Knowing that, I decided that my Monday was not painful enough so I brutally formatted the ssd, downloaded and installed [Ubuntu Server 20.04.1](https://ubuntu.com/download/server).  
   
-I want just to precise that this rig was born as a ETH miner, not as a password cracking rig; for this reason, the CPU is not powerful enough to generate wordlists on the fly or just to mutate them using some rules. The CPU is a [i7-4790](https://ark.intel.com/content/www/us/en/ark/products/80806/intel-core-i7-4790-processor-8m-cache-up-to-4-00-ghz.html), which is one of the best CPU for the  FCLGA1150 but still not enough; just to give you a (very) rough example, it can generate enough words to fill up little less than 4x 1070 cracking in `-m16800`. Fortunately, it is ok to run wordlists as they are on disk.
+I want just to precise that this rig was born as a ETH miner, not as a password cracking rig; for this reason, the CPU is not powerful enough to generate wordlists on the fly or just to mutate them using some rules. The CPU is a [i7-4790](https://ark.intel.com/content/www/us/en/ark/products/80806/intel-core-i7-4790-processor-8m-cache-up-to-4-00-ghz.html), which is one of the best CPU for the  FCLGA1150 but still not enough; just to give you a (very) rough example, it can generate enough words to fill up little less than 4x 1070 cracking in `-m16800`. Fortunately, it is ok to run wordlists as they are on disk. As soon as I will become a real adult with a real job I might think about a [Threadripper](https://www.amd.com/en/products/cpu/amd-ryzen-threadripper-3990x) or a double CPU, we'll see.   
   
 Oh right, almost forgot to say: cracking hashes without permission is illegal. Don't do illegal stuff, that's bad; go to sleep early, it is good for your health.
 ___
