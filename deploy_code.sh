@@ -7,7 +7,6 @@ printf "\033[0;32mDeploying updates to GitHub...\033[0m\n"
 
 # Add changes to git.
 git add .
-git rm --cached public
 
 msg="rebuilding site $(date)"
 if [ -n "$*" ]; then
