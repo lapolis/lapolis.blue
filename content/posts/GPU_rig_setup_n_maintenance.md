@@ -10,16 +10,16 @@ tags:
   - cracking
   - hash
 ---
-Few days ago, a poor GPU rig aka Ring0 (long story, don't ask), was full of sticky dust and (probably) dry thermal paste, so I decided that something had to be done; at the end of the day, Ring0 never did something wrong to deserve that. Keeping in mind my decision I started to tear down Ring0 aiming for a deep cleaning; fortunately [Dennis](https://www.linkedin.com/in/dennis-varischetti) was there to help making the whole process way quicker.  
+A few days ago, a poor GPU rig, aka Ring0 (long story, don't ask), was full of sticky dust and (probably) dry thermal paste, so I decided that something had to be done; at the end of the day, Ring0 never did anything wrong to deserve that. Keeping in mind my decision, I started to tear down Ring0 aiming for a deep cleaning; fortunately [Dennis](https://www.linkedin.com/in/dennis-varischetti) was there to help making the whole process way quicker.  
   
-Once Ring0 was nice and clean wearing its new jumper (more details later) I realised that I did not upgraded it for a while and many new versions of Ubuntu Server have been released (was running on [Ubuntu Server 16.04](https://releases.ubuntu.com/16.04/). Knowing that, I decided that my Monday was not painful enough so I brutally formatted the ssd, downloaded and installed [Ubuntu Server 20.04.1](https://ubuntu.com/download/server).  
+Once Ring0 was nice and clean, wearing its new jumper (more details later), I realised that I had not upgraded it for a while and many new versions of Ubuntu Server have been released (was running on [Ubuntu Server 16.04](https://releases.ubuntu.com/16.04/). Knowing that, I decided that my Monday was not painful enough, so I brutally formatted the ssd, downloaded and installed [Ubuntu Server 20.04.1](https://ubuntu.com/download/server).  
   
-I want just to precise that this rig was born as a ETH miner, not as a password cracking rig; for this reason, the CPU is not powerful enough to generate wordlists on the fly or just to mutate them using some rules. The CPU is a [i7-4790](https://ark.intel.com/content/www/us/en/ark/products/80806/intel-core-i7-4790-processor-8m-cache-up-to-4-00-ghz.html), which is one of the best CPU for the  FCLGA1150 but still not enough; just to give you a (very) rough example, it can generate enough words to fill up little less than 4x 1070 cracking in `-m16800`. Fortunately, it is ok to run wordlists as they are on disk. As soon as I will become a real adult with a real job I might think about a [Threadripper](https://www.amd.com/en/products/cpu/amd-ryzen-threadripper-3990x) or a double CPU, we'll see.   
+I just want to specify that this rig was born as an ETH miner, not as a password cracking rig; for this reason, the CPU is not powerful enough to generate wordlists on the fly or just to mutate them using some rules. The CPU is a [i7-4790](https://ark.intel.com/content/www/us/en/ark/products/80806/intel-core-i7-4790-processor-8m-cache-up-to-4-00-ghz.html), which is one of the best CPUs for the  FCLGA1150, but still not enough; just to give you a (very) rough example, it can generate enough words to fill up little less than 4x 1070 cracking in `-m16800`. Fortunately, it is ok to run wordlists as they are on disk. As soon as I will become a real adult with a real job I might think about a [Threadripper](https://www.amd.com/en/products/cpu/amd-ryzen-threadripper-3990x) or a double CPU, we'll see.   
   
-Oh right, almost forgot to say: cracking hashes without permission is illegal. Don't do illegal stuff, that's bad; go to sleep early, it is good for your health.
+Oh right, almost forgot to say: cracking hashes without permission is illegal. Don't do illegal stuff, that's bad; and go to sleep early, it is good for your health.
 ___
 ## System Installation
-I will skip the Ubuntu Server installation process, you can find the instructions pretty much [everywhere](https://ubuntu.com/tutorials/install-ubuntu-server#1-overview). I want just to precise that the GPU ring has NO SCREEN/DISPLAY attached, everything is done via ssh using the `root` user.
+I will skip the Ubuntu Server installation process, you can find the instructions pretty much [everywhere](https://ubuntu.com/tutorials/install-ubuntu-server#1-overview). Just one note: the GPU ring has NO SCREEN/DISPLAY attached, everything is done via ssh using the `root` user.
 
 Vital thing first:
 ```bash
@@ -27,12 +27,12 @@ sed -i 's/#force_color_prompt=yes/force_color_prompt=yes/g' ~/.bashrc
 source ~/.bashrc
 ```
 
-Update and Upgrade which is always good EXCEPT on the Kali VM for the OSCP exam, but that's another [story](https://lapolis.blue/posts/2020/09/oscp_survival_101/).
+Updating and Upgrading is always good EXCEPT on the Kali VM for the OSCP exam, but that's another [story](https://lapolis.blue/posts/2020/09/oscp_survival_101/).
 ```bash
 apt-get update
 apt-get upgrade
 ```
-Since the last time I done this process, lots of different flavours of the same Nvidia drivers are available. Since I feel brave today I will go with the latest one: the [Nvidia 450](https://www.nvidia.com/Download/driverResults.aspx/160555/en-us). 
+Since the last time I've done this process, lots of different flavours of the same Nvidia drivers have become available. Since I feel brave today I will go with the latest one: the [Nvidia 450](https://www.nvidia.com/Download/driverResults.aspx/160555/en-us). 
 ```bash
 apt-get install xserver-xorg-video-nvidia-450-server \
 				nvidia-headless-450-server \
@@ -40,21 +40,21 @@ apt-get install xserver-xorg-video-nvidia-450-server \
 				nvidia-settings \
 				nvidia-cuda-toolkit
 ```
-Once all the Nvidia drivers are installed and since I did not find any other way to control the GPU fan speed without having a display manager running, I install [LightDM](https://wiki.ubuntu.com/LightDM). Please, if you know how it should be done correctly let me know.
+Once all of the Nvidia drivers are installed and since I did not find any other way to control the GPU fan speed without having a display manager running, I install [LightDM](https://wiki.ubuntu.com/LightDM). Please, if you know how it should be done correctly let me know.
 ```bash
 apt-get install lightdm
 ```
-The last thing before the glory is to tell Nvidia X driver how to behave. The config file can be generated using [nvidia-xconfig](http://manpages.ubuntu.com/manpages/precise/en/man1/alt-nvidia-current-updates-xconfig.1.html#description) and not painfully write it by hand.
+The last thing before glory is to tell the Nvidia X driver how to behave. The config file can be generated using [nvidia-xconfig](http://manpages.ubuntu.com/manpages/precise/en/man1/alt-nvidia-current-updates-xconfig.1.html#description) and not painfully write it by hand.
 ```bash
 nvidia-xconfig --allow-empty-initial-configuration \
 				--enable-all-gpus \
 				--cool-bits=4 # if you want to OC put 24
 ```
-Maybe `reboot` at this point. Just in case, why not checking if all the GPUs are detected at this point?  
+Maybe `reboot` at this point. And just in case, why not checking if all the GPUs are detected at this point?  
 
 {{< image src="/img/gpu/nvidiasmi.png" alt="Ring0 jumper-naked" position="center" style="border-radius: 8px;" >}}  
 
-Since I have different GPUs with different temps, I cannot do a nice and clean loop to start all the GPU's fans at the same speed, so I done this simple bash script. Of course the 2 GPUs at 80% are the [MSI](https://www.msi.com/Graphics-card/geforce-gtx-1070-gaming-x-8g) u.U .
+Since I have different GPUs with different temps, I cannot do a nice and clean loop to start all the GPU's fans at the same speed, so I've done this simple bash script. Of course, the 2 GPUs at 80% are the [MSI](https://www.msi.com/Graphics-card/geforce-gtx-1070-gaming-x-8g) u.U .
 ```bash
 #!/bin/bash
 
@@ -88,12 +88,12 @@ And finally!
 *Results at the bottom.*  
 ___
 ## Physical cleaning
-All the cleaning was done using [Isopropyl Alcohol (99%)](https://www.amazon.co.uk/gp/product/B079YVPZDF/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1) and random Microfibre Cleaning Cloths; where the cloths were not able to get, we used a soft toothbrush to gently (not really :P) remove all the dust trying to stay with Ring0 forever. The thermal paste we used is a classic [ARCTIC MX-4](https://www.amazon.co.uk/gp/product/B07LF66ZSV/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1).
+All the cleaning was done using [Isopropyl Alcohol (99%)](https://www.amazon.co.uk/gp/product/B079YVPZDF/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1) and random Microfibre Cleaning Cloths; where the cloths were not available, we used a soft toothbrush to gently (not really :P) remove all the dust trying to stay with Ring0 forever. The thermal paste we used is a classic [ARCTIC MX-4](https://www.amazon.co.uk/gp/product/B07LF66ZSV/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1).
 The whole thing was a mess, poor Ring0.  
 
 {{< image src="/img/gpu/mobo.gif" alt="Mobo Dusty-Clean" position="center" style="border-radius: 8px;" >}}  
 
-The GPUs collected lot of dust but it is always nice to see the final result on.  
+The GPUs collected a lot of dust, but it is always nice to see the final results.  
 After a couple of hours fighting against the effect of the Isopropyl Alcohol inhalation, everything started to look right again.  
 
 {{< image src="/img/gpu/msi.gif" alt="MSI Dusty-Clean" position="center" style="border-radius: 8px;" >}}  
