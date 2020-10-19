@@ -11,8 +11,8 @@ tags:
   - palinka_team
 ---
 
-Not long ago, during a very normal afternoon, I thought: "I feel I want to suffer a bit". I quickly checked what [CTF Time](https://ctftime.org/) was suggesting and there it was, the answer to all my desires: [Hacktober CTF](https://ctftime.org/event/1108).  
-At this point, with no pressure :P , I check if anyone wanted to join me in this, probably painful, adventure.  
+Not long ago, during a regular afternoon, I thought to myself: "I feel like I want to suffer a bit". I quickly checked what [CTF Time](https://ctftime.org/) had on offer and there it was, the answer to all my dreams: [Hacktober CTF](https://ctftime.org/event/1108).  
+It was at this point, without pressuring of course... :P , I check to see if anyone wanted to join me in this, probably painful, adventure.  
 
 {{< image src="/img/hacktober/1_rec.png" alt="Recruitment" position="center" style="border-radius: 8px;" >}}  
 
@@ -30,7 +30,7 @@ Let me introduce the members of the palinka_team:
 - fluffiie aka [Maider](https://www.linkedin.com/in/mdrurb/)  
 - lapolis aka [Nicola](https://www.linkedin.com/in/nicola-pastres/)
 
-This is a small write-up showing how we solved some of the more interesting challenges. We all helped each other on solving each section, however this is where each team member focused more:  
+We all helped each other with solving each section, however this is where each team member focused more:  
 |User|&nbsp;Category|
 |----|----|
 |lapolis&nbsp;&nbsp;&nbsp;&nbsp;-->|&nbsp;web, SQL, forensics, Linux|
@@ -38,13 +38,14 @@ This is a small write-up showing how we solved some of the more interesting chal
 |fluffiie&nbsp;&nbsp;&nbsp;&nbsp;-->|&nbsp;crypto|
 |gr0g101&nbsp;-->|&nbsp;Traffic analysis, stego, forensics|  
   
-We really want to mention that the whole CTF was a fun competition with nice and creative challenges. A huge shout out to the organizers!!
+We really want to mention that the whole CTF was a fun competition with nice and creative challenges. A huge shout out to the organisers!!
 
+The following write-ups are a selection of the most interesting challenges, chosen by the whole team, showing how we solved them and the thought processes behind them. 
 ___
 ## 90s Kids
 
-For this challenge we had to run some queries on a database recovered form a dump.  
-Wait.. What?? No SQL injections?? Who the hell ever did some queries to a legit db??  
+For this challenge we had to run some queries on a database recovered from a dump.  
+Wait.. What?? No SQL injections?? Who the hell ever did queries to a legit db??  
 Well, first thing was to set up a new db called `westridge` to recover the dump which required some cleaning.
 ```bash
 unzip shallowgraveu.zip
@@ -56,7 +57,7 @@ sudo mysql westridge < shallowgraveu.sql
 
 {{< image src="/img/hacktober/5_90s.png" alt="90 kids" position="center" style="border-radius: 8px;" >}}  
 
-Mmmmh.. this requires a regex for sure. No wait, MySQL know exactly what a date is? Well.. Nice!  
+Mmmmh.. this requires a regex for sure. No wait, MySQL knows exactly what a date is? Well.. Nice!  
 ```sql
 SELECT count(user_id) FROM users 
 WHERE month(dob) = 10 
@@ -68,7 +69,7 @@ ___
 
 {{< image src="/img/hacktober/6_stud.png" alt="student body" position="center" style="border-radius: 8px;" >}}  
   
-Well, this one was hard. First we had to find out the instructor name and surname.
+Well, this one was hard. First we had to find out the instructor's name and surname.
 
 ```sql
 SELECT e.user_id, 
@@ -87,17 +88,23 @@ JOIN users luc on luc.user_id = e.user_id
 JOIN roles_assigned ra on ra.user_id = prof.user_id 
 JOIN roles r on r.role_id = ra.role_id 
 WHERE e.user_id = ( 
-	SELECT user_id FROM users WHERE first = 'Lucia' ) 
+  SELECT user_id FROM users WHERE name = 'Lucia' ) 
 AND tc.course_id = (
-	SELECT course_id FROM courses WHERE title = 'SOCI424' );
+  SELECT course_id FROM courses WHERE title = 'SOCI424');
 ```  
+
+{{< image src="/img/hacktober/27_proff.png" alt="professor" position="center" style="border-radius: 8px;" >}}  
+
 Finally, we could query the students headcount:
 ```sql
 SELECT count(user_id) 
 FROM enrollments 
 WHERE term_crs_id in ( 
-	SELECT term_crs_id FROM term_courses WHERE instructor = 480 );
-```
+  SELECT term_crs_id FROM term_courses WHERE instructor = 480 );
+```  
+
+{{< image src="/img/hacktober/28_dbflag.png" alt="db flaggg" position="center" style="border-radius: 8px;" >}}  
+
 ___
 ## Jigsaw  
 
@@ -109,7 +116,9 @@ Finally something that we like, regex time!
 SELECT username,last 
 FROM users 
 WHERE last regexp '^[K,R,I]{2}[^\n][[:alpha:]]{3}[E-N]$';
-```
+```  
+
+{{< image src="/img/hacktober/29_regflag.png" alt="regexxxxx" position="center" style="border-radius: 8px;" >}}  
 
 Ok that was quick :(  
 
@@ -118,20 +127,20 @@ ___
 
 {{< image src="/img/hacktober/8_shell.png" alt="shellcode extraction" position="center" style="border-radius: 8px;" >}}  
 
-Our first idea was to convert it into a binary file, and try to analyse it or disassemble it and figure out the created file name.  
+Our first idea was to convert it to a binary file and try to analyse or disassemble it, then figure out the name of the created file.  
 ```bash
 wget -O shellcode.hex https://tinyurl.com/y2ra3pzj
 cat shellcode.hex | xxd -r -p > shellcode.bin
 ```  
-Using xxd we could check for any potential string, or hint or really *JUST ANYTHING USEFUL*, unfortunately no luck.  
+Using xxd we could check for any potential strings, or hints or really *JUST ANYTHING USEFUL*, unfortunately no luck.  
 We also tried to disassemble it with [radare2](https://rada.re/n/radare2.html) and make some sense out of it, no success here.  
-Then, IDA tried to rescue us; we throw the shellcode into IDA hoping to discover something juicy and we could realise that it tries to interact with shell32.dll.  
+Then, IDA tried to rescue us; we threw the shellcode into IDA hoping to discover something juicy and we realised that it tried to interact with shell32.dll.  
 
 {{< image src="/img/hacktober/9_shell.png" alt="shellcode" position="center" style="border-radius: 8px;" >}}  
 
-This is a Windows API what contains functions used for opening files or web pages... Mmmmmh... Let's switch to Windows then... Wait! Do you really want to run a piece of shellcode from a real malware on your PC!?!? Are you mental? Well... We leave it to you to decide that... It had to be solved at all costs, that was all we knew...  
+This is a Windows API that contains functions used for opening files or web pages... Mmmmmh... Let's switch to Windows then... Wait! Do you really want to run a piece of shellcode from real malware on your PC!?!? Are you mental? Well... We leave it to you, to decide that... All we knew, was.... It had to be solved at all costs!  
   
-After careful researching (banging our head against the wall and crying) we came across to a great tool called [scdbg](http://sandsprite.com/blogs/index.php?uid=7&pid=152). A huge "THANK YOU" FOR THE CREATORS of this amazing tool. It is capable of analysing shellcode at runtime and log every details, such as API calls and interactive hooks, in a simulated virtual environment. It is even possible to integrate it with IDA.  
+After careful researching (banging our heads against the wall and crying) we came across a great tool called [scdbg](http://sandsprite.com/blogs/index.php?uid=7&pid=152). A huge "THANK YOU" TO THE CREATORS of this amazing tool. It is capable of analysing shellcode at runtime and logs every detail, such as API calls and interactive hooks, in a simulated virtual environment. It is even possible to integrate it with IDA.  
   
 We need to activate report mode and API table scan to see if any function is called from shell32.dll to download or create a file. If yes, then we smashed it because the full path will be passed as an argument and hopefully it will be the ROAMING folder. So let’s see...  
 
@@ -141,7 +150,7 @@ We need to activate report mode and API table scan to see if any function is cal
 
 {{< image src="/img/hacktober/11_done.png" alt="shellcode done" position="center" style="border-radius: 8px;" >}}  
   
-And yesssss we won!!! There we have it... The shellcode calls URLDownloadToFileA with 2 arguments. One is the malicious exe's location and the other is the full path in where the downloaded file will be written. The exe file lands inside the ROAMING folder under the current user. It also executes that file using the ShellExecuteA function. This challenge was an emotional roller-coaster, but we managed to learn from it and discover an amazing tool.  
+And yesssss we won!!! There we have it... The shellcode calls URLDownloadToFileA with 2 arguments. One is the malicious exe's location and the other is the full path that the downloaded file will be written to. The exe file lands inside the ROAMING folder under the current user. It also executes that file using the ShellExecuteA function. This challenge was an emotional roller-coaster, but we managed to learn from it AND discovered an amazing tool.  
   
 {{< image src="/img/hacktober/12_memeshelll.png" alt="meme shellcode" position="center" style="border-radius: 8px;" >}}  
   
@@ -150,16 +159,16 @@ ___
   
 {{< image src="/img/hacktober/13_code.png" alt="redrum" position="center" style="border-radius: 8px;" >}}  
   
-The challenge "Red Rum" asked us to create a list of numbers between 1 and 500 and to replace some of them as following:
+The challenge "Red Rum" asked us to create a list of numbers between 1 and 500 and to replace some of them as the following:
 - numbers divisible by 3 with "Red"
 - numbers divisible by 5 with "Rum"
 - numbers divisible by both 3 AND 5 with "RedRum"  
 
-By netcatting env2.hacktober.io we got one more hint: "You answer should be comma-separated with no spaces".  
+By netcatting env2.hacktober.io we got one more hint: "Your answer should be comma-separated with no spaces".  
   
 {{< image src="/img/hacktober/14_hintnc.png" alt="nc hint" position="center" style="border-radius: 8px;" >}}  
   
-After some coding and swearing we got it.  
+After some coding... and swearing, we got it.  
   
 ```py
 import socket 
@@ -195,7 +204,7 @@ ___
 
 {{< image src="/img/hacktober/16_bboy.png" alt="b-boy" position="center" style="border-radius: 8px;" >}}  
   
-This challenge involved a little bit of digging and guessing. We tried the usual tools to carve some information out from the picture, but nothing was working.  
+This challenge involved a little bit of digging around and guessing. We tried the usual tools to carve some information out from the picture, but nothing was working.  
   
 Combining the hint from the description and the fact that [steghide](http://steghide.sourceforge.net/) expected a pass phrase we thought we had to find something about the picture itself. A little bit of googling directed us to a [Wikipedia page](https://en.wikipedia.org/wiki/Danse_Macabre) containing a description of the picture. Scrolling through that page, right at the bottom, we found an interesting sentence mentioning the title of the picture and the author... Mmmmh... That could be the pass phrase.  
   
@@ -210,13 +219,13 @@ ___
   
 {{< image src="/img/hacktober/20_evil.png" alt="evil carol" position="center" style="border-radius: 8px;" >}}  
 
-Ok... there we were, with bleeding eyes, trying to solve the final session of traffic analysis. The task was to find out the type of the malware family, so we fired up [Wireshark](https://www.wireshark.org/), used couple of eye drops, a quick Palinka and ready to dive in.  
+Ok... there we were, with bleeding eyes, trying to solve the final session of traffic analysis. The task was to find out the type of malware family, so we fired up [Wireshark](https://www.wireshark.org/), used couple of eye drops, a quick Palinka and ready to dive in.  
   
 Since the malware was downloaded from a remote source, we should be able to see a clear destination IP and the name of the malicious file.  
 
 {{< image src="/img/hacktober/21_ipssss.png" alt="evil carol" position="center" style="border-radius: 8px;" >}}  
   
-Shortly after, we found a nice site which can provide information on a specific malware by its name or url. Doing a search for either “july22.dll” or “MwRrN5” throw us all the info we needed. The malware type was there waiting for us. All the last phase could be solved in a similar fashion.  
+Shortly after, we found a nice site which can provide information on specific malware by its name or url. Doing a search for either “july22.dll” or “MwRrN5” throw us all the info we need. The malware type was there waiting for us. The last phase could be solved in a similar fashion.  
   
 {{< image src="/img/hacktober/22_mal-flag.png" alt="flags everywhereeeeeeee" position="center" style="border-radius: 8px;" >}}  
 
@@ -226,14 +235,14 @@ ___
 {{< image src="/img/hacktober/23_hell.png" alt="hell spawn" position="center" style="border-radius: 8px;" >}}  
   
 Memory dump analysis? WTF is that? Ooooh, is it that magic thing done with [volatily](https://www.volatilityfoundation.org/)? Yeah that's right.  
-For this challenge we need to find out which was the process that spawned the malicious "explorer.exe". First we need to find the the profile used.  
+For this challenge we needed to find out which was the process that spawned the malicious "explorer.exe". First we need to find the the profile used.  
 ```bash
 volatility imageinfo -f ./mem.raw
 ```  
 
 {{< image src="/img/hacktober/24_prof.png" alt="profile" position="center" style="border-radius: 8px;" >}}  
   
-Having the profile, it is possible to make some sense out of this bunch of data. Using the "cmdline" function we easily get a list of all the commands.  
+Having the profile, it was possible to make some sense from this bunch of data. Using the "cmdline" function we easily get a list of all the commands.  
 ```bash
 volatility --profile=Win10x64_17134 cmdline -f ./mem.raw 
 ```  
