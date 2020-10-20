@@ -1,7 +1,7 @@
 ---
 title: "HacktoberCTF_(palinka_team)"
 date: 2020-10-19T08:32:45+01:00
-draft: true
+draft: false
 toc: false
 images:
 tags:
@@ -10,6 +10,8 @@ tags:
   - writeup
   - palinka_team
 ---
+  
+{{< image src="/img/hacktober/00_logo.png" alt="hacktober ctf logo" position="center" style="border-radius: 8px;" >}}  
 
 Not long ago, during a regular afternoon, I thought to myself: "I feel like I want to suffer a bit". I quickly checked what [CTF Time](https://ctftime.org/) had on offer and there it was, the answer to all my dreams: [Hacktober CTF](https://ctftime.org/event/1108).  
 It was at this point, without pressuring of course... :P , I check to see if anyone wanted to join me in this, probably painful, adventure.  
@@ -40,7 +42,8 @@ We all helped each other with solving each section, however this is where each t
   
 We really want to mention that the whole CTF was a fun competition with nice and creative challenges. A huge shout out to the organisers!!
 
-The following write-ups are a selection of the most interesting challenges, chosen by the whole team, showing how we solved them and the thought processes behind them. 
+The following write-ups are a selection of the most interesting challenges, chosen by the whole team, showing how we solved them and the thought processes behind them.  
+
 ___
 ## 90s Kids
 
