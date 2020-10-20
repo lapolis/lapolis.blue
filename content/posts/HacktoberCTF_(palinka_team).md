@@ -91,7 +91,7 @@ JOIN users luc on luc.user_id = e.user_id
 JOIN roles_assigned ra on ra.user_id = prof.user_id 
 JOIN roles r on r.role_id = ra.role_id 
 WHERE e.user_id = ( 
-  SELECT user_id FROM users WHERE name = 'Lucia' ) 
+  SELECT user_id FROM users WHERE first = 'Lucia' ) 
 AND tc.course_id = (
   SELECT course_id FROM courses WHERE title = 'SOCI424');
 ```  
