@@ -43,6 +43,9 @@ We all helped each other with solving each section, however this is where each t
 We really want to mention that the whole CTF was a fun competition with nice and creative challenges. A huge shout out to the organisers!!
 
 The following write-ups are a selection of the most interesting challenges, chosen by the whole team, showing how we solved them and the thought processes behind them.  
+  
+{{< badge >}}
+  
 
 ___
 ## 90s Kids
